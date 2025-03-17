@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "API Response";
+}
+
+<h2>API Response</h2>
+
+<p>@ViewBag.Message</p>
+
+@if (ViewBag.ResponseData != null)
+{
+    <pre>@Html.Raw(ViewBag.ResponseData)</pre>
+}
