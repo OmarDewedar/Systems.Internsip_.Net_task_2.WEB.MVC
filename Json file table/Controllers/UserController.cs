@@ -18,6 +18,7 @@ public class UserController : Controller
     }
 
     // Fetch and display all users
+    //comit
     public async Task<IActionResult> Index()
     {
         if (_userList.Count == 0) // Fetch only once
@@ -41,21 +42,24 @@ public class UserController : Controller
     [HttpPost]
     public IActionResult Create(User user)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(user); // Reload the form if validation fails
+        }
+
         if (user != null)
         {
-            // Generate a new ID for the new user
             int newId = _userList.Any() ? _userList.Max(u => u.Id) + 1 : 1;
             user.Id = newId;
-
-            // Add the new user to the list
             _userList.Add(user);
 
-            // TempData message for success
             TempData["SuccessMessage"] = "User added successfully!";
         }
 
         return RedirectToAction("Index");
     }
+
+
 
 
 
@@ -84,11 +88,14 @@ public class UserController : Controller
 
     // Handle the edited data
     [HttpPost]
-    [HttpPost]
     public IActionResult Edit(User updatedUser)
     {
-        var existingUser = _userList.FirstOrDefault(u => u.Id == updatedUser.Id);
+        if (!ModelState.IsValid)
+        {
+            return View(updatedUser); // Reload form if validation fails
+        }
 
+        var existingUser = _userList.FirstOrDefault(u => u.Id == updatedUser.Id);
         if (existingUser != null)
         {
             existingUser.FirstName = updatedUser.FirstName;
@@ -97,14 +104,17 @@ public class UserController : Controller
             existingUser.Phone = updatedUser.Phone;
             existingUser.Username = updatedUser.Username;
             existingUser.BirthDate = updatedUser.BirthDate;
+            existingUser.Image = updatedUser.Image;
             existingUser.Role = updatedUser.Role;
 
-            // Store success message in TempData
-            TempData["SuccessMessage"] = $"User with ID {updatedUser.Id} updated successfully!";
+            TempData["SuccessMessage"] = $"User {updatedUser.FirstName} updated successfully!";
         }
 
         return RedirectToAction("Index");
     }
+
+
+
 
 
 

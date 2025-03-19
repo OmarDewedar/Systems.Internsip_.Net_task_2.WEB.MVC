@@ -3,20 +3,54 @@
 <h2>Create New User</h2>
 
 <form asp-action="Create" method="post">
-    <label>First Name:</label>
-    <input asp-for="FirstName" class="form-control" />
-    <label>Last Name:</label>
-    <input asp-for="LastName" class="form-control" />
-    <label>Email:</label>
-    <input asp-for="Email" class="form-control" />
-    <label>Phone:</label>
-    <input asp-for="Phone" class="form-control" />
-    <label>Username:</label>
-    <input asp-for="Username" class="form-control" />
-    <label>Birth Date:</label>
-    <input asp-for="BirthDate" class="form-control" />
-    <label>Role:</label>
-    <input asp-for="Role" class="form-control" />
-    <br />
-    <button type="submit" class="btn btn-success">Add User</button>
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+    </div>
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" type="text" />
+        <span class="text-danger" asp-validation-for="Email"></span>
+
+    </div>
+
+    <div>
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BirthDate"></label>
+        <input asp-for="BirthDate" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Image"></label>
+        <input asp-for="Image" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="Role">Role</label>
+        <select asp-for="Role" class="form-control">
+            <option value="Admin">Admin</option>
+            <option value="Moderator">Moderator</option>
+            <option value="User">User</option>
+        </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-success">Create</button>
 </form>

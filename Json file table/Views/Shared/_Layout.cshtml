@@ -3,29 +3,36 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - User_Data_table</title>
+    <title>@ViewData["Title"]  User Data MVC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Json_file_table.styles.css" asp-append-version="true" />
 </head>
+<div class="container">
+    @if (ViewContext.RouteData.Values["Controller"]?.ToString() == "User" &&
+    ViewContext.RouteData.Values["Action"]?.ToString() == "Index")
+    {
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>User List</h2>
+            <a asp-controller="User" asp-action="Create" class="btn btn-success">Add User</a>
+        </div>
+    }
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Json_file_table</a>
+                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MVC</a> *@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LocalUser">LocalUser</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </nav>
@@ -38,10 +45,9 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - Json_file_table - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - User_List - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <newFunction()/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
@@ -51,6 +57,10 @@
     async function submitForm(url, formData) {
         const response = await fetch(url, {
             method: 'POST',
+
+        function newFunction() {
+            return "Are you sure you want to delete this user?";
+        }
             body: formData
         });
 
@@ -77,3 +87,23 @@
         }
     }
 </script>
+<script>
+    function deleteUser(userId) {
+        if (!confirm("Are you sure you want to delete this user?")) return;
+
+        fetch(`/User/Delete/${userId}`, {
+            method: "POST"
+        }).then(response => {
+            if (response.ok) {
+                alert("User deleted successfully!");
+                location.reload(); // Refresh the page
+            } else {
+                alert("Failed to delete user.");
+            }
+        }).catch(error => console.log(error));
+    }
+</script>
+
+
+
+
